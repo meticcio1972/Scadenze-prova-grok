@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071018">
+<title>Scadenze Smart — Grok Test</title>
+<style>
+:root{--bg:#071018;--panel:#0d1822;--panel2:#111f2b;--line:#243442;--txt:#eef6fb;--muted:#8ea2b2;--ok:#35d07f;--warn:#ffbd45;--danger:#ff5d6c;--accent:#55d6ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,#12334a 0,#071018 38%,#050b10 100%);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif}
+button,input{font:inherit}.app{min-height:100vh}.top{position:sticky;top:0;z-index:5;backdrop-filter:blur(18px);background:#071018dd;border-bottom:1px solid var(--line);padding:14px 16px;display:flex;align-items:center;gap:12px}.brand{font-weight:750;letter-spacing:.2px;flex:1}.brand small{display:block;color:var(--muted);font-size:11px;font-weight:500;margin-top:2px}.menu{width:42px;height:42px;border:1px solid var(--line);background:var(--panel);color:var(--txt);border-radius:12px;font-size:22px}.layout{display:flex}.side{position:fixed;z-index:10;top:0;left:0;width:280px;height:100vh;background:#09131cf5;border-right:1px solid var(--line);padding:18px;transform:translateX(-105%);transition:.2s;backdrop-filter:blur(18px)}.side.open{transform:none}.side h3{margin:6px 0 20px}.nav button{width:100%;text-align:left;border:0;background:transparent;color:var(--muted);padding:13px 12px;border-radius:10px;margin:2px 0}.nav button.active,.nav button:hover{background:var(--panel2);color:var(--txt)}main{width:100%;max-width:1180px;margin:auto;padding:22px 16px 50px}.eyebrow{color:var(--muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase}.title{font-size:28px;margin:5px 0 8px}.sub{color:var(--muted);font-size:14px;line-height:1.5}.search{width:100%;height:46px;margin:18px 0;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--txt);padding:0 14px;outline:none}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:linear-gradient(180deg,#10202b,#0b151d);border:1px solid var(--line);border-radius:15px;padding:15px}.kpi strong{display:block;font-size:25px;margin-top:5px}.kpi span,.muted{color:var(--muted);font-size:12px}.section{margin-top:18px}.section h3{margin:0 0 10px;font-size:16px}.table{overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}table{width:100%;border-collapse:collapse;min-width:720px}th,td{padding:12px 13px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}th{color:var(--muted);font-weight:500}.pill{display:inline-block;padding:4px 8px;border-radius:99px;font-size:11px;background:#173044;color:var(--accent)}.danger{color:var(--danger)}.warn{color:var(--warn)}.ok{color:var(--ok)}.btn{min-height:44px;border-radius:11px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);padding:0 15px;font-weight:600}.btn.primary{background:var(--txt);color:#071018}.actions{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.offer{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:15px;margin:9px 0}.offer h4{margin:0 0 5px}.offer p{margin:6px 0;color:var(--muted);font-size:13px}.detail{display:none}.detail.show{display:block}.category{cursor:pointer}.toast{position:fixed;left:16px;right:16px;bottom:18px;background:#14232f;border:1px solid var(--line);padding:13px 15px;border-radius:12px;display:none;z-index:20}.toast.show{display:block}@media(min-width:850px){.menu{display:none}.side{position:fixed;transform:none}.top{margin-left:280px}.layout main{margin-left:280px}.grid{grid-template-columns:repeat(4,1fr)}main{padding:32px}.side{padding-top:72px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><button class="menu" onclick="toggleMenu()">☰</button><div class="brand">SCADENZE SMART<small>GDO · controllo rotazione · DEMO GROK</small></div></header>
+<aside id="side" class="side"><h3>Scadenze Smart</h3><nav class="nav">
+<button class="active" onclick="showPage('dashboard',this)">⌂ Dashboard</button>
+<button onclick="showPage('autonomia',this)">◈ Autonomia intelligente</button>
+<button onclick="showPage('offerte',this)">% Offerte</button>
+<button onclick="showPage('vendite',this)">▣ Vendite</button>
+<button onclick="showPage('movimenti',this)">⇄ Movimenti</button>
+<button onclick="toast('Sezione demo: qui collegheremo la Shelf Life Library.')">◉ Shelf Life</button>
+<button onclick="toast('Sezione demo: analisi merceologica.')">◉ Analisi merceologica</button>
+</nav></aside>
+
+<main>
+<section id="dashboard" class="page">
+<div class="eyebrow">Punto vendita demo</div><div class="title">Dashboard scadenze</div><div class="sub">Una vista rapida. I dettagli e il motore decisionale stanno nel menu laterale.</div>
+<input id="search" class="search" placeholder="Cerca codice, descrizione, reparto" oninput="renderTable()">
+<div class="grid">
+<div class="card kpi"><span>Referenze</span><strong>900</strong></div>
+<div class="card kpi"><span>Scadute</span><strong class="danger">12</strong></div>
+<div class="card kpi"><span>≤ 7 giorni</span><strong class="warn">38</strong></div>
+<div class="card kpi"><span>Offerte proposte</span><strong>17</strong></div>
+</div>
+<div class="section"><h3>Reparti</h3><div class="grid">
+<div class="card category" onclick="filterDept('Merendine')"><b>🍪 Merendine</b><p class="muted">84 referenze</p></div>
+<div class="card category" onclick="filterDept('Bevande')"><b>🥤 Bevande</b><p class="muted">112 referenze</p></div>
+<div class="card category" onclick="filterDept('Drogheria')"><b>🛒 Drogheria</b><p class="muted">236 referenze</p></div>
+<div class="card category" onclick="filterDept('Surgelati')"><b>❄️ Surgelati</b><p class="muted">91 referenze</p></div>
+</div></div>
+<div class="section"><h3>Scadenze da guardare</h3><div class="table"><table><thead><tr><th>Codice</th><th>Descrizione</th><th>Reparto</th><th>Scadenza</th><th>Gg</th><th>Qty</th><th>Vendite/sett.</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+</section>
+
+<section id="autonomia" class="page detail">
+<div class="eyebrow">Motore autonomo</div><div class="title">Autonomia intelligente</div><div class="sub">Il prototipo Grok ragiona su vendite medie, giorni alla scadenza, copertura e propone un intervento.</div>
+<div class="actions"><button class="btn primary" onclick="runAnalysis()">Analizza ora</button><button class="btn" onclick="applyAll()">Applica tutte le offerte</button></div>
+<div id="analysisMsg" class="muted"></div>
+<div class="grid">
+<div class="card kpi"><span>Scaduti</span><strong class="danger">12</strong></div>
+<div class="card kpi"><span>Offerte proposte</span><strong class="warn">17</strong></div>
+<div class="card kpi"><span>Investimento sconti</span><strong>€ 428</strong></div>
+<div class="card kpi"><span>Spreco evitato (stima)</span><strong class="ok">€ 1.860</strong></div>
+</div>
+<div class="section"><div class="card"><div class="eyebrow">Esempio guidato</div><h3>Prodotto demo 8001015</h3><p class="muted">Merendina demo · 18 pezzi · scade tra 6 giorni · vendite 1,2 pz/settimana</p><p><b>Rotazione:</b> a questo ritmo non si vende lo stock prima della scadenza.</p><p><b>Intervento:</b> sconto consigliato <span class="warn"><b>30%</b></span>.</p><button class="btn primary" onclick="toast('Offerta demo applicata sul prodotto 8001015.')">Applica questo esempio</button></div></div>
+<div class="section"><h3>Proposte di offerta</h3><div id="offers"></div></div>
+</section>
+
+<section id="offerte" class="page detail"><div class="eyebrow">Decisione commerciale</div><div class="title">Offerte</div><div class="sub">Le proposte generate dal motore possono essere applicate e poi riviste dall'operatore.</div><div class="section" id="offers2"></div></section>
+<section id="vendite" class="page detail"><div class="eyebrow">Dati</div><div class="title">Vendite</div><div class="card"><h3>Storico vendite demo</h3><p class="muted">Periodo: 01/01/2026 → 31/08/2026 · 243 giorni</p><p>Il test usa valori demo. Il collegamento ai dati reali verrà fatto solo nel progetto principale.</p></div></section>
+<section id="movimenti" class="page detail"><div class="eyebrow">Dati</div><div class="title">Movimenti</div><div class="card"><h3>Acquisti / vendite / differenze</h3><p class="muted">Esempio: acquisti 160 · vendite 141 · differenza +19.</p><p>La differenza non viene automaticamente chiamata “ammanco”: può essere spiegata oppure da verificare.</p></div></section>
+</main>
+<div id="toast" class="toast"></div>
+</div>
+<script>
+const products=[
+['8001015','MERENDINA DEMO CROISSANT','Merendine','12/10/2026',6,18,1.2],
+['92991','BRIOCHE PASQUIER BRIOCHETTE 320 g','Merendine','15/10/2026',9,24,12.3],
+['124837',"GRISBI' CARAMELLO MOU 112 g",'Dolci','18/10/2026',12,14,5.4],
+['89709','GRISSINBON FETTE BISC.CLASSICHE x56 500g','Prodotti da forno','20/10/2026',14,31,8.1],
+['45012','CAFFÈ CAPSULE DEMO','Bevande','22/10/2026',16,40,18.2],
+['55031','BIRRA LAGER DEMO','Bevande','24/10/2026',18,36,9.8],
+['70018','PASSATA DI POMODORO DEMO','Drogheria','01/11/2026',26,50,11.4]
+];
+function renderTable(){
+ const q=(document.getElementById('search').value||'').toLowerCase();
+ document.getElementById('tbody').innerHTML=products.filter(p=>p.join(' ').toLowerCase().includes(q)).map(p=>`<tr><td>${p[0]}</td><td>${p[1]}</td><td><span class="pill">${p[2]}</span></td><td>${p[3]}</td><td class="${p[4]<=7?'danger':p[4]<=15?'warn':''}"><b>${p[4]}</b></td><td>${p[5]}</td><td>${p[6]}</td></tr>`).join('');
+}
+function showPage(id,btn){
+ document.querySelectorAll('.page').forEach(x=>x.classList.add('detail'));
+ document.getElementById(id).classList.remove('detail');
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+ document.getElementById('side').classList.remove('open');
+ window.scrollTo(0,0);
+ if(id==='autonomia'||id==='offerte') renderOffers();
+}
+function renderOffers(){
+ const data=[
+ ['MERENDINA DEMO CROISSANT','6 gg','18 pz','30%','€ 97'],
+ ['BRIOCHE PASQUIER BRIOCHETTE 320 g','9 gg','24 pz','20%','€ 79'],
+ ['BIRRA LAGER DEMO','18 gg','36 pz','15%','€ 64']
+ ];
+ const html=data.map(x=>`<div class="offer"><h4>${x[0]}</h4><p>${x[1]} · ${x[2]} · sconto <b class="warn">${x[3]}</b> · investimento ${x[4]}</p><button class="btn" onclick="toast('Offerta applicata: ${x[0]}')">Applica</button></div>`).join('');
+ document.getElementById('offers').innerHTML=html; document.getElementById('offers2').innerHTML=html;
+}
+function runAnalysis(){document.getElementById('analysisMsg').textContent='Analisi completata: 900 referenze analizzate · 17 offerte proposte · investimento €428.';renderOffers();toast('Analisi completata.');}
+function applyAll(){toast('Demo: 17 proposte applicate.');}
+function filterDept(d){document.getElementById('search').value=d;renderTable();document.getElementById('search').scrollIntoView({behavior:'smooth'});}
+function toggleMenu(){document.getElementById('side').classList.toggle('open')}
+function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),2200)}
+renderTable();renderOffers();
+</script>
+</body>
+</html>
