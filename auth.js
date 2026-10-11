@@ -1,8 +1,7 @@
 "use strict";
 
 const LOGIN_PAGE = "login.html"; 
-const HOME_PAGE = "index.html";
-
+const HOME_PAGE = "scadenze.html";
 async function controllaAccesso() {
     const pagina =
         window.location.pathname.split("/").pop() || HOME_PAGE;
