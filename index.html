@@ -1,22 +1,151 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0b1724">
-  <title>Scadenze Smart GDO</title>
-  <meta http-equiv="refresh" content="0; url=login.html">
-  <script>
-    window.location.replace("login.html");
-  </script>
+  <title>Dashboard — Scadenze Smart GDO</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/topbar.css">
+  <link rel="stylesheet" href="css/table.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root{--bg:#f4f7fb;--panel:#fff;--line:#e5eaf1;--text:#182230;--muted:#667085;--navy:#101c2d;--blue:#2563eb;--red:#dc2626;--amber:#d97706;--green:#15803d}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+    .app-layout{min-height:100vh;display:flex}
+    .app-sidebar{width:250px;flex:0 0 250px;min-height:100vh;background:var(--navy);color:white;padding:24px 16px;position:sticky;top:0;height:100vh;overflow:auto}
+    .brand{font-size:19px;font-weight:800;letter-spacing:.04em;margin:0 10px 4px}.brand-sub{color:#a9b8ce;font-size:11px;letter-spacing:.15em;margin:0 10px 25px}
+    .app-nav{display:grid;gap:6px}.app-nav a,.app-nav button{display:flex;align-items:center;gap:11px;padding:12px 13px;border:0;border-radius:10px;background:transparent;color:#d6dfeb;text-decoration:none;font:inherit;text-align:left;cursor:pointer}.app-nav .active,.app-nav a:hover,.app-nav button:hover{background:#253751;color:white}
+    .main-wrap{min-width:0;flex:1;padding:22px clamp(14px,3vw,34px) 50px}
+    .topline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}.page-title{margin:0;font-size:clamp(24px,3vw,32px);letter-spacing:-.03em}.subtitle{margin:5px 0 0;color:var(--muted);font-size:14px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{border:1px solid #d7deea;background:white;color:var(--text);padding:10px 13px;border-radius:10px;font-weight:650;cursor:pointer}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn:hover{filter:brightness(.98)}
+    .kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 24px}.kpi{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:17px;box-shadow:0 2px 7px #162b4608;cursor:pointer;min-height:105px}.kpi .label{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:600}.kpi strong{display:block;font-size:30px;line-height:1.15;margin-top:10px}.kpi.red strong{color:var(--red)}.kpi.amber strong{color:var(--amber)}.kpi.blue strong{color:var(--blue)}.section{margin:22px 0}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px}.section-heading h2{margin:0;font-size:18px}.helper{color:var(--muted);font-size:12px;margin-top:5px}
+    .category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}.reparto-count-card{position:relative;background:white;border:1px solid var(--line);border-radius:14px;padding:13px;min-width:0;box-shadow:0 2px 7px #162b4608;min-height:145px}.reparto-count-card:hover{border-color:#98b8fa;transform:translateY(-1px)}.categoria-immagine{height:62px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}.categoria-immagine img{max-width:100%;max-height:60px;object-fit:contain}.categoria-nome{font-weight:700;font-size:13px;line-height:1.25;min-height:32px;padding-right:18px}.reparto-count-card strong{display:block;color:var(--blue);font-size:12px;margin-top:6px}.reparto-count-card button{position:absolute;right:8px;top:8px;border:0;background:#f3f5f9;border-radius:7px;padding:4px;cursor:pointer}
+    .panel{background:white;border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 2px 7px #162b4608}.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}.toolbar input,.toolbar select{min-height:41px;padding:9px 11px;border:1px solid #d0d7e2;border-radius:9px;background:#fff;font:inherit}.toolbar input{flex:1;min-width:210px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:11px}table{border-collapse:collapse;width:100%;min-width:780px;background:white}thead{background:#f7f9fc}th,td{padding:12px 11px;border-bottom:1px solid #e9edf3;text-align:left;font-size:13px;vertical-align:top}th{color:#566579;font-weight:700;white-space:nowrap}tbody tr:hover{background:#fbfdff}.btn-edit,.btn-delete{border:1px solid #dce2ea;background:#fff;border-radius:7px;padding:7px 9px;cursor:pointer}.btn-delete{color:#bd2626}.hidden-file{display:none}
+    .import-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;color:var(--muted);font-size:13px}.import-grid strong{display:block;color:var(--text);font-size:14px;margin-top:4px;overflow-wrap:anywhere}
+    #paginaOfferte{display:none}.modal-overlay{display:none;position:fixed;inset:0;background:#0b1724a8;z-index:100;align-items:center;justify-content:center;padding:16px;overflow:auto}.modal-box{width:min(650px,100%);max-height:94vh;overflow:auto;background:#fff;border-radius:16px;padding:22px;box-shadow:0 20px 60px #0003}.modal-box h2{margin:0 0 16px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.form-field{min-width:0}.form-field.full{grid-column:1/-1}.form-field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.form-field input,.form-field select,.form-field textarea{width:100%;padding:10px;border:1px solid #cfd7e2;border-radius:9px;font:inherit}.checkline{display:flex;align-items:center;gap:9px;margin-top:12px}.checkline input{width:auto}.modal-buttons{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.status-note{color:var(--muted);font-size:13px;margin:10px 0}.empty-state{padding:25px;text-align:center;color:var(--muted)}
+    @media(max-width:850px){.app-sidebar{width:72px;flex-basis:72px;padding:20px 8px}.brand{font-size:11px;letter-spacing:0;margin:0 0 6px;text-align:center}.brand-sub{display:none}.app-nav a,.app-nav button{justify-content:center;padding:13px 4px;font-size:0}.app-nav a i,.app-nav button i{font-size:17px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.category-grid{grid-template-columns:repeat(auto-fill,minmax(125px,1fr))}}
+    @media(max-width:520px){.main-wrap{padding:16px 10px 30px}.kpis{gap:8px}.kpi{padding:12px;min-height:96px}.kpi strong{font-size:25px}.kpi .label{font-size:12px}.form-grid{grid-template-columns:1fr}.form-field.full{grid-column:auto}.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.app-sidebar{width:55px;flex-basis:55px}}
+  </style>
 </head>
 <body>
-  <p>Scadenze Smart GDO</p>
-  <p>Reindirizzamento all'accesso...</p>
-  <p>
-    Se la pagina non si apre automaticamente,
-    <a href="login.html">accedi qui</a>.
-  </p>
+<div class="app-layout">
+  <aside class="app-sidebar">
+    <div class="brand">SCADENZE SMART</div>
+    <div class="brand-sub">GDO · ENTERPRISE</div>
+    <nav class="app-nav">
+      <a class="active" href="index.html" title="Dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <a href="scadenze.html" title="Scadenze"><i class="fa-regular fa-calendar"></i> Scadenze</a>
+      <button id="menuOfferte" type="button" title="Offerte"><i class="fa-solid fa-tags"></i> Offerte</button>
+      <a href="storico-vendite.html" title="Storico vendite"><i class="fa-solid fa-chart-line"></i> Storico vendite</a>
+      <a href="storico-scadenze.html" title="Storico scadenze"><i class="fa-solid fa-clock-rotate-left"></i> Storico scadenze</a>
+      <a href="ai-gdo.html" title="AI GDO"><i class="fa-solid fa-brain"></i> AI GDO</a>
+      <button type="button" onclick="eseguiLogout()" title="Esci"><i class="fa-solid fa-right-from-bracket"></i> Esci</button>
+    </nav>
+  </aside>
+
+  <main class="main-wrap">
+    <section id="dashboard">
+      <header class="topline">
+        <div><h1 class="page-title">Dashboard scadenze</h1><p class="subtitle">Situazione aggiornata delle referenze caricate nel gestionale.</p></div>
+        <div class="top-actions"><button class="btn" id="newProduct" type="button"><i class="fa-solid fa-plus"></i> Nuova referenza</button><button class="btn" id="importCSV" type="button"><i class="fa-solid fa-file-import"></i> Importa CSV</button></div>
+      </header>
+
+      <div id="avvisoCaricamento" class="panel status-note" role="status">Verifica accesso e caricamento referenze in corso…</div>
+
+      <section class="kpis" aria-label="Riepilogo scadenze">
+        <article class="kpi red" id="cardScaduti" role="button" tabindex="0"><div class="label"><i class="fa-solid fa-circle-exclamation"></i> Prodotti scaduti</div><strong id="scaduti">—</strong></article>
+        <article class="kpi red" id="cardEntro3" role="button" tabindex="0"><div class="label"><i class="fa-solid fa-calendar-xmark"></i> Entro 3 giorni</div><strong id="entro3">—</strong></article>
+        <article class="kpi amber" id="cardEntro7" role="button" tabindex="0"><div class="label"><i class="fa-solid fa-calendar-day"></i> Da 4 a 7 giorni</div><strong id="entro7">—</strong></article>
+        <article class="kpi amber" id="cardEntro10" role="button" tabindex="0"><div class="label"><i class="fa-regular fa-calendar"></i> Da 8 a 10 giorni</div><strong id="entro10">—</strong></article>
+        <article class="kpi amber" id="cardEntro15" role="button" tabindex="0"><div class="label"><i class="fa-regular fa-calendar-check"></i> Da 11 a 15 giorni</div><strong id="entro15">—</strong></article>
+        <article class="kpi blue" id="cardTotale" role="button" tabindex="0"><div class="label"><i class="fa-solid fa-boxes-stacked"></i> Referenze totali</div><strong id="totale">—</strong></article>
+      </section>
+
+      <section class="section">
+        <div class="section-heading"><div><h2>Reparti e categorie</h2><div class="helper">Seleziona una categoria per filtrare le referenze.</div></div></div>
+        <div id="listaReparti" class="category-grid"><div class="empty-state">Caricamento categorie…</div></div>
+      </section>
+
+      <section class="section panel" id="areaTabella">
+        <div class="section-heading"><div><h2>Referenze e rotazione</h2><div class="helper">Le medie settimanali sono disponibili quando lo storico vendite è collegato.</div></div><button class="btn" type="button" onclick="if(typeof deselezionaReparto==='function') deselezionaReparto(); else { Dashboard.repartoSelezionato=null; renderTabella(); Dashboard.aggiorna(); }">Mostra tutte</button></div>
+        <div class="toolbar">
+          <input id="ricerca" type="search" placeholder="Cerca codice, descrizione o reparto…" autocomplete="off">
+          <select id="repartoCSV" aria-label="Seleziona reparto per filtro/importazione"><option value="">Tutti i reparti / importazione</option></select>
+          <button id="btnVenditeMedie" class="btn" type="button" onclick="aggiornaMedieSettimanaliDashboard()">Aggiorna medie</button>
+          <span id="statoVenditeMedie" class="status-note"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Codice</th><th>Descrizione</th><th>Reparto</th><th>Scadenza</th><th>Giorni</th><th>Media / rischio rotazione</th><th>Azioni</th></tr></thead>
+            <tbody id="productTable"><tr><td colspan="7" class="empty-state">Caricamento referenze…</td></tr></tbody>
+          </table>
+        </div>
+        <p class="helper">I conteggi sono calcolati dai prodotti restituiti da Supabase. Se la tabella non è accessibile, controlla la console e le policy RLS.</p>
+      </section>
+
+      <section class="section panel">
+        <div class="section-heading"><div><h2>Importazione referenze</h2><div class="helper">L'importazione sostituisce i prodotti del reparto selezionato con quelli del CSV.</div></div></div>
+        <div class="toolbar"><span>Reparto scelto:</span><strong id="repartoImportazione">—</strong><input class="hidden-file" id="csvFile" type="file" accept=".csv,text/csv"><span id="statoImportazione">In attesa di importazione</span></div>
+        <div class="import-grid"><div>File<strong id="fileImportazione">—</strong></div><div>Prodotti importati<strong id="prodottiImportati">—</strong></div><div>Ultimo import<strong id="ultimoImport">—</strong></div></div>
+      </section>
+    </section>
+
+    <section id="paginaOfferte" class="panel">
+      <div class="section-heading"><div><h1 class="page-title">Offerte e lavorazione</h1><p class="subtitle">Gestione delle referenze che richiedono un intervento.</p></div><button id="tornaDashboard" class="btn" type="button">Torna alla dashboard</button></div>
+      <p>Usa la tabella della dashboard e la modifica della referenza per aggiornare lo stato di lavorazione e le informazioni sull'offerta.</p>
+      <div class="toolbar"><button type="button" class="btn primary" id="tornaDashboard2" onclick="document.getElementById('paginaOfferte').style.display='none';document.getElementById('dashboard').style.display='block';">Torna alla dashboard</button><a class="btn" href="offerte.html">Apri pagina offerte</a></div>
+    </section>
+  </main>
+</div>
+
+<div id="productModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <h2 id="modalTitle">Nuova referenza</h2>
+    <div class="form-grid">
+      <div class="form-field"><label for="codice">Codice</label><input id="codice" type="text" required></div>
+      <div class="form-field"><label for="categoria">Reparto</label><select id="categoria" required></select></div>
+      <div class="form-field full"><label for="descrizione">Descrizione</label><input id="descrizione" type="text" required></div>
+      <div class="form-field"><label for="scadenza">Scadenza</label><input id="scadenza" type="date" required></div>
+      <div class="form-field"><label for="quantita">Quantità</label><input id="quantita" type="number" min="0" step="1"></div>
+      <div class="form-field"><label for="prezzo">Prezzo (€)</label><input id="prezzo" type="number" min="0" step="0.01"></div>
+      <div class="form-field"><label for="note">Note</label><input id="note" type="text"></div>
+      <div class="form-field full checkline"><input id="offerta" type="checkbox"><label for="offerta">Referenza in offerta</label></div>
+      <div class="form-field" id="pezziOffertaBox" style="display:none"><label for="pezzi_offerta">Pezzi in offerta</label><input id="pezzi_offerta" type="number" min="0" step="1"></div>
+      <div class="form-field" id="dateOffertaBox" style="display:none"><label for="data_inizio_offerta">Inizio offerta</label><input id="data_inizio_offerta" type="date"><label for="data_fine_offerta" style="margin-top:8px">Fine offerta</label><input id="data_fine_offerta" type="date"></div>
+    </div>
+    <div class="modal-buttons"><button id="closeModal" type="button" class="btn">Annulla</button><button id="saveProduct" type="button" class="btn primary">Salva referenza</button></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="storage.js"></script>
+<script src="prodotti.js"></script>
+<script src="database.js"></script>
+<script src="dashboard.js"></script>
+<script src="app.js"></script>
+<script>
+  // Mostra gli errori di caricamento in modo leggibile, senza dati demo.
+  window.addEventListener('error', function (event) {
+    const box = document.getElementById('avvisoCaricamento');
+    if (box && event.message) box.textContent = 'Errore durante il caricamento: ' + event.message;
+  });
+  const originalAvvia = window.avvia;
+  // Mantiene aggiornato il testo informativo dopo che la dashboard ha popolato i contatori.
+  document.addEventListener('DOMContentLoaded', function () {
+    window.setTimeout(function () {
+      const box = document.getElementById('avvisoCaricamento');
+      const totale = document.getElementById('totale');
+      if (box && totale && totale.textContent !== '—') {
+        box.textContent = 'Dashboard caricata. Referenze visualizzate: ' + totale.textContent + '.';
+      }
+    }, 1800);
+  });
+</script>
 </body>
 </html>
